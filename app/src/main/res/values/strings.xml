@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MoviesApp</string>
+    <string name="msg_no_data">No data returned. Pull to refresh.</string>
+</resources>
