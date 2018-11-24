@@ -3,52 +3,90 @@ package com.tmartins.task.moviesapp.core.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
 
     @SerializedName("vote_count")
     @Expose
-    public Integer voteCount;
+    private Integer voteCount;
     @SerializedName("id")
     @Expose
-    public long id;
+    private long id;
     @SerializedName("video")
     @Expose
-    public Boolean video;
+    private Boolean video;
     @SerializedName("vote_average")
     @Expose
-    public Float voteAverage;
+    private Float voteAverage;
     @SerializedName("title")
     @Expose
-    public String title;
+    private String title;
     @SerializedName("popularity")
     @Expose
-    public Float popularity;
+    private Float popularity;
     @SerializedName("poster_path")
     @Expose
-    public String posterPath;
+    private String posterPath;
     @SerializedName("original_language")
     @Expose
-    public String originalLanguage;
+    private String originalLanguage;
     @SerializedName("original_title")
     @Expose
-    public String originalTitle;
+    private String originalTitle;
     @SerializedName("genre_ids")
     @Expose
-    public List<Integer> genreIds = null;
+    private List<Integer> genreIds = null;
     @SerializedName("backdrop_path")
     @Expose
-    public String backdropPath;
+    private String backdropPath;
     @SerializedName("adult")
     @Expose
-    public Boolean adult;
+    private Boolean adult;
     @SerializedName("overview")
     @Expose
-    public String overview;
+    private String overview;
     @SerializedName("release_date")
     @Expose
-    public String releaseDate;
+    private String releaseDate;
+
+    public Movie() {
+        this.voteCount = 0;
+        this.id = 0;
+        this.video = false;
+        this.voteAverage = 0f;
+        this.title = "";
+        this.popularity = 0f;
+        this.posterPath = "";
+        this.originalLanguage = "";
+        this.originalTitle = "";
+        this.genreIds = new ArrayList<>();
+        this.backdropPath = "";
+        this.adult = false;
+        this.overview = "";
+        this.releaseDate = "";
+    }
+
+    public Movie(Integer voteCount, long id, Boolean video, Float voteAverage, String title,
+                 Float popularity, String posterPath, String originalLanguage, String originalTitle,
+                 List<Integer> genreIds, String backdropPath, Boolean adult, String overview,
+                 String releaseDate) {
+        this.voteCount = voteCount;
+        this.id = id;
+        this.video = video;
+        this.voteAverage = voteAverage;
+        this.title = title;
+        this.popularity = popularity;
+        this.posterPath = posterPath;
+        this.originalLanguage = originalLanguage;
+        this.originalTitle = originalTitle;
+        this.genreIds = genreIds;
+        this.backdropPath = backdropPath;
+        this.adult = adult;
+        this.overview = overview;
+        this.releaseDate = releaseDate;
+    }
 
     public Integer getVoteCount() {
         return voteCount;

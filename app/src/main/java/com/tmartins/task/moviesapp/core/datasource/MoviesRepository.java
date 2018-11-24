@@ -2,7 +2,9 @@ package com.tmartins.task.moviesapp.core.datasource;
 
 import android.support.annotation.VisibleForTesting;
 
+import com.tmartins.task.moviesapp.core.model.CollectionDetails;
 import com.tmartins.task.moviesapp.core.model.Movie;
+import com.tmartins.task.moviesapp.core.model.MovieDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +35,17 @@ public class MoviesRepository implements MoviesDataSource {
         }).toList().toFlowable();
     }
 
-    public Flowable<Movie> getMovie(long id) {
+    @Override
+    public Flowable<MovieDetail> loadMovieDetails(long movieId) {
+        return remoteDataSource.loadMovieDetails(movieId);
+    }
+
+    @Override
+    public Flowable<CollectionDetails> loadMovieCollections(long collectionId) {
+        return remoteDataSource.loadMovieCollections(collectionId);
+    }
+
+    public Flowable<Movie> getMovieFromList(long id) {
         return Flowable.fromIterable(movieList).filter(movie -> movie.getId() == id);
     }
 

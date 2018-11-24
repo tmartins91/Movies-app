@@ -1,4 +1,4 @@
-package com.tmartins.task.moviesapp.ui.movies;
+package com.tmartins.task.moviesapp.ui.movieDetail;
 
 import android.arch.lifecycle.Lifecycle;
 import android.arch.lifecycle.LifecycleObserver;
@@ -6,10 +6,8 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
 
 import com.tmartins.task.moviesapp.core.datasource.MoviesRepository;
-import com.tmartins.task.moviesapp.core.model.Movie;
+import com.tmartins.task.moviesapp.core.model.MovieDetail;
 import com.tmartins.task.moviesapp.helpers.schedulers.RunOn;
-
-import java.util.List;
 
 import javax.inject.Inject;
 
@@ -20,11 +18,11 @@ import io.reactivex.disposables.Disposable;
 import static com.tmartins.task.moviesapp.helpers.schedulers.SchedulerType.IO;
 import static com.tmartins.task.moviesapp.helpers.schedulers.SchedulerType.UI;
 
-public class MoviesPresenter implements MoviesContract.Presenter, LifecycleObserver {
+public class MovieDetailPresenter implements MovieDetailContract.Presenter, LifecycleObserver {
 
     private MoviesRepository repository;
 
-    private MoviesContract.View view;
+    private MovieDetailContract.View view;
 
     private Scheduler ioScheduler;
     private Scheduler uiScheduler;
@@ -32,7 +30,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LifecycleObser
     private CompositeDisposable disposeBag;
 
     @Inject
-    public MoviesPresenter(MoviesRepository repository, MoviesContract.View view,
+    public MovieDetailPresenter(MoviesRepository repository, MovieDetailContract.View view,
                            @RunOn(IO) Scheduler ioScheduler,
                            @RunOn(UI) Scheduler uiScheduler) {
         this.repository = repository;
@@ -49,9 +47,7 @@ public class MoviesPresenter implements MoviesContract.Presenter, LifecycleObser
 
     @Override
     @OnLifecycleEvent(Lifecycle.Event.ON_RESUME)
-    public void onAttach() {
-        loadMovies();
-    }
+    public void onAttach() { }
 
     @Override
     @OnLifecycleEvent(Lifecycle.Event.ON_PAUSE)
@@ -60,8 +56,8 @@ public class MoviesPresenter implements MoviesContract.Presenter, LifecycleObser
     }
 
     @Override
-    public void loadMovies() {
-        Disposable disposable = repository.loadMovies()
+    public void loadMovieDetail(long id) {
+        Disposable disposable = repository.loadMovieDetails(id)
                 .subscribeOn(ioScheduler)
                 .observeOn(uiScheduler)
                 .subscribe(
@@ -72,22 +68,12 @@ public class MoviesPresenter implements MoviesContract.Presenter, LifecycleObser
         disposeBag.add(disposable);
     }
 
-    @Override
-    public void getMovie(long movieId) {
-        Disposable disposable = repository.getMovieFromList(movieId)
-                .filter(movie -> movie != null)
-                .subscribeOn(ioScheduler)
-                .observeOn(uiScheduler)
-                .subscribe(movie -> view.showMovieDetail(movie));
-        disposeBag.add(disposable);
-    }
-
-    private void handleReturnedData(List<Movie> list) {
+    private void handleReturnedData(MovieDetail movieDetail) {
         view.stopLoadingIndicator();
-        if (list != null && !list.isEmpty()) {
-            view.showMovies(list);
+        if (movieDetail != null) {
+            view.showMovieDetail(movieDetail);
         } else {
-            view.showNoDataMessage();
+            view.showErrorMessage("No data returned");
         }
     }
 
