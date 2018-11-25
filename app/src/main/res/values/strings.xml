@@ -2,4 +2,5 @@
     <string name="app_name">MoviesApp</string>
     <string name="msg_no_data">No data returned. Pull to refresh.</string>
     <string name="title_activity_movie_details">Movie Details</string>
+    <string name="belongs_to_collection">Belongs to collection</string>
 </resources>

@@ -1,6 +1,5 @@
 package com.tmartins.task.moviesapp.ui.movieDetail;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
@@ -28,8 +27,12 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     @BindView(R.id.recycler_view_collection)
     RecyclerView collectionRecyclerView;
-    @BindView(R.id.text_view)
-    TextView textView;
+    @BindView(R.id.title_text_view)
+    TextView titleTextView;
+    @BindView(R.id.content_text_view)
+    TextView contentTextView;
+    @BindView(R.id.collection_text_view)
+    TextView collectionContentTextView;
     @BindView(R.id.paralax_image)
     ImageView paralaxImage;
 
@@ -91,7 +94,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     private void initViews() {
-        textView.setVisibility(View.GONE);
+        titleTextView.setVisibility(View.GONE);
+        contentTextView.setVisibility(View.GONE);
         collectionRecyclerView.setVisibility(View.GONE);
     }
 
@@ -113,8 +117,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     private void showNotificationMessage(String message) {
-        textView.setVisibility(View.VISIBLE);
-        textView.setText(message);
+        contentTextView.setVisibility(View.VISIBLE);
+        contentTextView.setText(message);
     }
 
     private void bindData(Movie movie){
@@ -122,8 +126,11 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
                 .load(movie.getBackgroundImage())
                 .into(paralaxImage);
 
-        textView.setText(movie.getOverview());
-        textView.setVisibility(View.VISIBLE);
+        titleTextView.setVisibility(View.VISIBLE);
+        titleTextView.setText(movie.getOriginalTitle());
+
+        contentTextView.setVisibility(View.VISIBLE);
+        contentTextView.setText(movie.getOverview());
 
         loadCollectionIfIsPart(movie);
     }
@@ -132,6 +139,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         if (movie.getCollection() != null){
             collectionRecyclerView.setVisibility(View.VISIBLE);
             presenter.loadCollectionDetails(movie.getCollection().getId());
+
+            collectionContentTextView.setVisibility(View.VISIBLE);
         }
     }
 
