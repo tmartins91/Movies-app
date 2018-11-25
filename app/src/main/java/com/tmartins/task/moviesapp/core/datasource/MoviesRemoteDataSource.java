@@ -4,7 +4,6 @@ import com.tmartins.task.moviesapp.core.api.MoviesResponse;
 import com.tmartins.task.moviesapp.core.api.MoviesService;
 import com.tmartins.task.moviesapp.core.model.CollectionDetails;
 import com.tmartins.task.moviesapp.core.model.Movie;
-import com.tmartins.task.moviesapp.core.model.MovieDetail;
 
 import java.util.List;
 
@@ -27,7 +26,7 @@ public class MoviesRemoteDataSource implements MoviesDataSource {
     }
 
     @Override
-    public Flowable<MovieDetail> loadMovieDetails(long movieId) {
+    public Flowable<Movie> loadMovieDetails(long movieId) {
         return moviesService.getMovieDetails(movieId);
     }
 

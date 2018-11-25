@@ -7,7 +7,7 @@ public class Collection {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -25,18 +25,18 @@ public class Collection {
         this.backdropPath = "";
     }
 
-    public Collection(Integer id, String name, String posterPath, String backdropPath) {
+    public Collection(long id, String name, String posterPath, String backdropPath) {
         this.id = id;
         this.name = name;
         this.posterPath = posterPath;
         this.backdropPath = backdropPath;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

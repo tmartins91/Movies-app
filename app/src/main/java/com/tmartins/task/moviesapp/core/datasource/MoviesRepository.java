@@ -4,7 +4,6 @@ import android.support.annotation.VisibleForTesting;
 
 import com.tmartins.task.moviesapp.core.model.CollectionDetails;
 import com.tmartins.task.moviesapp.core.model.Movie;
-import com.tmartins.task.moviesapp.core.model.MovieDetail;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +35,7 @@ public class MoviesRepository implements MoviesDataSource {
     }
 
     @Override
-    public Flowable<MovieDetail> loadMovieDetails(long movieId) {
+    public Flowable<Movie> loadMovieDetails(long movieId) {
         return remoteDataSource.loadMovieDetails(movieId);
     }
 
