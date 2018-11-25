@@ -7,7 +7,7 @@ public class Company {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("logo_path")
     @Expose
     private String logoPath;
@@ -25,18 +25,18 @@ public class Company {
         this.originCountry = "";
     }
 
-    public Company(Integer id, String logoPath, String name, String originCountry) {
+    public Company(long id, String logoPath, String name, String originCountry) {
         this.id = id;
         this.logoPath = logoPath;
         this.name = name;
         this.originCountry = originCountry;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

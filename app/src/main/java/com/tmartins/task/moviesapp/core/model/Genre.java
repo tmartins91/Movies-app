@@ -7,7 +7,7 @@ public class Genre {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -17,16 +17,16 @@ public class Genre {
         this.name = "";
     }
 
-    public Genre(Integer id, String name) {
+    public Genre(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 

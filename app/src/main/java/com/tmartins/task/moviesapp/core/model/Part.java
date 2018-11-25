@@ -18,7 +18,7 @@ public class Part {
     public List<Integer> genreIds = null;
     @SerializedName("id")
     @Expose
-    public Integer id;
+    public long id;
     @SerializedName("original_language")
     @Expose
     public String originalLanguage;
@@ -50,7 +50,7 @@ public class Part {
     @Expose
     public Float popularity;
 
-    public Part(Boolean adult, String backdropPath, List<Integer> genreIds, Integer id,
+    public Part(Boolean adult, String backdropPath, List<Integer> genreIds, long id,
                 String originalLanguage, String originalTitle, String overview, String posterPath,
                 String releaseDate, String title, Boolean video, Float voteAverage, Integer voteCount,
                 Float popularity) {
@@ -94,11 +94,11 @@ public class Part {
         this.genreIds = genreIds;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -180,6 +180,10 @@ public class Part {
 
     public void setPopularity(Float popularity) {
         this.popularity = popularity;
+    }
+
+    public String getBackgroundImage(){
+        return "https://image.tmdb.org/t/p/w154/" + this.posterPath;
     }
 
 }

@@ -9,7 +9,7 @@ public class CollectionDetails {
 
     @SerializedName("id")
     @Expose
-    private Integer id;
+    private long id;
     @SerializedName("name")
     @Expose
     private String name;
@@ -26,7 +26,7 @@ public class CollectionDetails {
     @Expose
     private List<Part> parts = null;
 
-    public CollectionDetails(Integer id, String name, String overview, String posterPath,
+    public CollectionDetails(long id, String name, String overview, String posterPath,
                              String backdropPath, List<Part> parts) {
         this.id = id;
         this.name = name;
@@ -36,11 +36,11 @@ public class CollectionDetails {
         this.parts = parts;
     }
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
