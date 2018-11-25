@@ -42,7 +42,7 @@ public class MoviesAdapter extends BaseRecyclerViewAdapter<MoviesAdapter.MoviesV
         Movie movie = getItem(i);
 
         Glide.with(movieViewHolder.movieImage)
-                .load(movie.getBackgroundImage())
+                .load(movie.getBackgroundImage(Movie.W154))
                 .into(movieViewHolder.movieImage);
         movieViewHolder.votesText.setText(
                 String.format(Locale.getDefault(), "%d votes", movie.getVoteCount()));

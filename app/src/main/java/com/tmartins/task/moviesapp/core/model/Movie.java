@@ -3,9 +3,13 @@ package com.tmartins.task.moviesapp.core.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
+
+    public static final String W154 = "w154";
+    public static final String W500 = "w500";
 
     @SerializedName("vote_count")
     @Expose
@@ -330,8 +334,8 @@ public class Movie {
         this.homepage = homepage;
     }
 
-    public String getBackgroundImage(){
-        return "https://image.tmdb.org/t/p/w154/" + this.posterPath;
+    public String getBackgroundImage(String size){
+        return "https://image.tmdb.org/t/p/"+size+"/" + this.posterPath;
     }
 
 }

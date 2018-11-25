@@ -123,7 +123,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     private void bindData(Movie movie){
         Glide.with(paralaxImage)
-                .load(movie.getBackgroundImage())
+                .load(movie.getBackgroundImage(Movie.W500))
                 .into(paralaxImage);
 
         titleTextView.setVisibility(View.VISIBLE);
