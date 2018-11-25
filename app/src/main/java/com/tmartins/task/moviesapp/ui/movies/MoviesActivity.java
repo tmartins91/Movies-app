@@ -1,7 +1,7 @@
 package com.tmartins.task.moviesapp.ui.movies;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.tmartins.task.moviesapp.R;
 import com.tmartins.task.moviesapp.core.model.Movie;
 import com.tmartins.task.moviesapp.ui.base.BaseActivity;
+import com.tmartins.task.moviesapp.ui.movieDetail.MovieDetailActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -94,13 +95,18 @@ public class MoviesActivity extends BaseActivity implements MoviesContract.View 
 
     @Override
     public void showMovieDetail(Movie movie) {
-        //TODO Implement movie detail
-        Snackbar.make(refreshLayout, movie.getOriginalTitle(), Snackbar.LENGTH_SHORT).show();
+        openDetailActivity(movie.getId());
     }
 
     private void showNotificationMessage(String message) {
         textView.setVisibility(View.VISIBLE);
         textView.setText(message);
+    }
+
+    private void openDetailActivity(long id){
+        Intent detailIntent = new Intent(getBaseContext(), MovieDetailActivity.class);
+        detailIntent.putExtra("MOVIE_ID", id);
+        startActivity(detailIntent);
     }
 
 }

@@ -96,7 +96,7 @@ public class MoviesPresenterTest{
 
     @Test
     public void getMovies_ShouldShowDetailOnView() {
-        given(repository.getMovie(1)).willReturn(Flowable.just(MOVIE1));
+        given(repository.getMovieFromList(1)).willReturn(Flowable.just(MOVIE1));
 
         presenter.getMovie(1);
         testScheduler.triggerActions();

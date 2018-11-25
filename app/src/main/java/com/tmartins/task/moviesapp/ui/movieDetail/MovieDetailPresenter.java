@@ -6,7 +6,8 @@ import android.arch.lifecycle.LifecycleOwner;
 import android.arch.lifecycle.OnLifecycleEvent;
 
 import com.tmartins.task.moviesapp.core.datasource.MoviesRepository;
-import com.tmartins.task.moviesapp.core.model.MovieDetail;
+import com.tmartins.task.moviesapp.core.model.CollectionDetails;
+import com.tmartins.task.moviesapp.core.model.Movie;
 import com.tmartins.task.moviesapp.helpers.schedulers.RunOn;
 
 import javax.inject.Inject;
@@ -68,10 +69,31 @@ public class MovieDetailPresenter implements MovieDetailContract.Presenter, Life
         disposeBag.add(disposable);
     }
 
-    private void handleReturnedData(MovieDetail movieDetail) {
+    @Override
+    public void loadCollectionDetails(long id) {
+        Disposable disposable = repository.loadMovieCollections(id)
+                .subscribeOn(ioScheduler)
+                .observeOn(uiScheduler)
+                .subscribe(
+                        this::handleCollectionReturnedData,
+                        this::handleError,
+                        () -> view.stopLoadingIndicator());
+
+        disposeBag.add(disposable);
+    }
+
+    private void handleReturnedData(Movie movie) {
         view.stopLoadingIndicator();
-        if (movieDetail != null) {
-            view.showMovieDetail(movieDetail);
+        if (movie != null) {
+            view.showMovieDetail(movie);
+        } else {
+            view.showErrorMessage("No data returned");
+        }
+    }
+
+    private void handleCollectionReturnedData(CollectionDetails collectionDetails) {
+        if (collectionDetails != null) {
+            view.showCollectionDetails(collectionDetails);
         } else {
             view.showErrorMessage("No data returned");
         }

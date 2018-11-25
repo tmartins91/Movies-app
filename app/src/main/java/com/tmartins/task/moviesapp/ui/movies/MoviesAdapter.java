@@ -35,7 +35,8 @@ public class MoviesAdapter extends BaseRecyclerViewAdapter<MoviesAdapter.MoviesV
         return new MoviesViewHolder(view);
     }
 
-    @Override public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
+    @Override
+    public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int i) {
         super.onBindViewHolder(viewHolder, i);
         MoviesViewHolder movieViewHolder = (MoviesViewHolder) viewHolder;
         Movie movie = getItem(i);
@@ -47,7 +48,8 @@ public class MoviesAdapter extends BaseRecyclerViewAdapter<MoviesAdapter.MoviesV
                 String.format(Locale.getDefault(), "%d votes", movie.getVoteCount()));
     }
 
-    @Override public int getItemCount() {
+    @Override
+    public int getItemCount() {
         return movies.size();
     }
 

@@ -1,7 +1,10 @@
 package com.tmartins.task.moviesapp.ui.movieDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -10,8 +13,11 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.tmartins.task.moviesapp.R;
-import com.tmartins.task.moviesapp.core.model.MovieDetail;
+import com.tmartins.task.moviesapp.core.model.CollectionDetails;
+import com.tmartins.task.moviesapp.core.model.Movie;
 import com.tmartins.task.moviesapp.ui.base.BaseActivity;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -30,6 +36,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     @Inject
     MovieDetailPresenter presenter;
 
+    private MovieDetailCollectionAdapter collectionAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,15 +48,28 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         ButterKnife.bind(this);
 
         initializePresenter();
-        setTitle(getString(R.string.title_activity_movie_details));
         initViews();
+        setTitle(getString(R.string.title_activity_movie_details));
 
         loadDetailsForMovie();
     }
 
     @Override
-    public void showMovieDetail(MovieDetail movieDetail) {
-        bindData(movieDetail);
+    public void showMovieDetail(Movie movie) {
+        bindData(movie);
+    }
+
+    @Override
+    public void showCollectionDetails(CollectionDetails collectionDetails) {
+        collectionAdapter = new MovieDetailCollectionAdapter(new ArrayList<>());
+        LinearLayoutManager layoutManager = new LinearLayoutManager(
+                this,
+                LinearLayoutManager.HORIZONTAL,
+                false);
+        collectionRecyclerView.setLayoutManager(layoutManager);
+        collectionRecyclerView.setAdapter(collectionAdapter);
+        collectionRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        collectionAdapter.updateData(collectionDetails.getParts());
     }
 
     @Override
@@ -71,6 +92,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     private void initViews() {
         textView.setVisibility(View.GONE);
+        collectionRecyclerView.setVisibility(View.GONE);
     }
 
     private void initActionBar(){
@@ -95,13 +117,22 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         textView.setText(message);
     }
 
-    private void bindData(MovieDetail movieDetail){
+    private void bindData(Movie movie){
         Glide.with(paralaxImage)
-                .load(movieDetail.getBackgroundImage())
+                .load(movie.getBackgroundImage())
                 .into(paralaxImage);
 
-        textView.setText(movieDetail.getOverview());
+        textView.setText(movie.getOverview());
         textView.setVisibility(View.VISIBLE);
+
+        loadCollectionIfIsPart(movie);
+    }
+
+    private void loadCollectionIfIsPart(Movie movie){
+        if (movie.getCollection() != null){
+            collectionRecyclerView.setVisibility(View.VISIBLE);
+            presenter.loadCollectionDetails(movie.getCollection().getId());
+        }
     }
 
 }
