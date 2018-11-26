@@ -21,11 +21,7 @@
         </activity>
         <activity
             android:name=".ui.movieDetail.MovieDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ui.movies.MoviesActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".ui.movies.MoviesActivity" />
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
     </application>
 

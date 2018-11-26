@@ -1,13 +1,17 @@
 package com.tmartins.task.moviesapp.ui.movieDetail;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -35,11 +39,14 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     TextView collectionContentTextView;
     @BindView(R.id.paralax_image)
     ImageView paralaxImage;
+    @BindView(R.id.scroll_content)
+    RelativeLayout scrollContent;
 
     @Inject
     MovieDetailPresenter presenter;
 
     private MovieDetailCollectionAdapter collectionAdapter;
+    private long currentMovieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,17 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == android.R.id.home) {
+            onBackPressed();
+            return  true;
+        }
+        return super.onOptionsItemSelected(item);
+
+    }
+
+    @Override
     public void showMovieDetail(Movie movie) {
         bindData(movie);
     }
@@ -72,6 +90,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
         collectionRecyclerView.setLayoutManager(layoutManager);
         collectionRecyclerView.setAdapter(collectionAdapter);
         collectionRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        collectionAdapter.setOnItemClickListener(
+                (view, position) -> openDetailActivity(collectionAdapter.getItem(position).getId())
+        );
         collectionAdapter.updateData(collectionDetails.getParts());
     }
 
@@ -110,9 +131,9 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     private void loadDetailsForMovie(){
-        long movieId = getIntent().getLongExtra("MOVIE_ID", -1);
-        if (movieId != -1){
-            presenter.loadMovieDetail(movieId);
+        currentMovieId = getIntent().getLongExtra("MOVIE_ID", -1);
+        if (currentMovieId != -1){
+            presenter.loadMovieDetail(currentMovieId);
         }
     }
 
@@ -141,6 +162,16 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
             presenter.loadCollectionDetails(movie.getCollection().getId());
 
             collectionContentTextView.setVisibility(View.VISIBLE);
+        }
+    }
+
+    private void openDetailActivity(long id){
+        if (currentMovieId != id){
+            Intent detailIntent = new Intent(getBaseContext(), MovieDetailActivity.class);
+            detailIntent.putExtra("MOVIE_ID", id);
+            startActivity(detailIntent);
+        }else {
+            Snackbar.make(scrollContent, R.string.movie_already_selected, Snackbar.LENGTH_SHORT).show();
         }
     }
 

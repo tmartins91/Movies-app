@@ -3,4 +3,5 @@
     <string name="msg_no_data">No data returned. Pull to refresh.</string>
     <string name="title_activity_movie_details">Movie Details</string>
     <string name="belongs_to_collection">Belongs to collection</string>
+    <string name="movie_already_selected">This movie is already selected!</string>
 </resources>
