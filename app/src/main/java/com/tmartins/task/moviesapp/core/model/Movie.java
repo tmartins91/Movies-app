@@ -3,7 +3,6 @@ package com.tmartins.task.moviesapp.core.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class Movie {
@@ -89,6 +88,10 @@ public class Movie {
     @SerializedName("tagline")
     @Expose
     private String tagline;
+
+    public Movie() {
+
+    }
 
     public Movie(long voteCount, long id, Boolean video, Float voteAverage, String title,
                  Float popularity, String posterPath, String originalLanguage, String originalTitle,

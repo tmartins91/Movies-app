@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -41,6 +42,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     ImageView paralaxImage;
     @BindView(R.id.scroll_content)
     RelativeLayout scrollContent;
+    @BindView(R.id.loading_view)
+    LinearLayout loadingView;
 
     @Inject
     MovieDetailPresenter presenter;
@@ -103,7 +106,7 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
 
     @Override
     public void stopLoadingIndicator() {
-
+        loadingView.setVisibility(View.GONE);
     }
 
     private void initializePresenter() {
@@ -131,6 +134,8 @@ public class MovieDetailActivity extends BaseActivity implements MovieDetailCont
     }
 
     private void loadDetailsForMovie(){
+        loadingView.setVisibility(View.VISIBLE);
+
         currentMovieId = getIntent().getLongExtra("MOVIE_ID", -1);
         if (currentMovieId != -1){
             presenter.loadMovieDetail(currentMovieId);
